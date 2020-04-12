@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from collections import defaultdict
 
 
 def main():
@@ -37,7 +38,10 @@ def main():
     df_age["fatalities"] = 0
 
     # A slightly hacky solution to get the case counts associated with the age distribution
-    # Also, a demonstration of how slow python is ;-)
+    # Also, a demonstration of how slow python is and also how I can't be bothered to read the
+    # pandas documentation for half a day ;-)
+    cases_ch = {"Male": defaultdict(int), "Female": defaultdict(int)}
+    fatalities_ch = {"Male": defaultdict(int), "Female": defaultdict(int)}
     for canton in df_age["canton"].unique():
         for age in df_age["age"].unique():
             for sex in df_age["sex"].unique():
@@ -60,6 +64,27 @@ def main():
                         & (df_age["sex"] == sex),
                         "fatalities",
                     ] = fatalities
+
+                    df_age.loc[
+                        (df_age["canton"] == "CH")
+                        & (df_age["age"] == age)
+                        & (df_age["sex"] == sex),
+                        "cases",
+                    ] += cases
+                    df_age.loc[
+                        (df_age["canton"] == "CH")
+                        & (df_age["age"] == age)
+                        & (df_age["sex"] == sex),
+                        "fatalities",
+                    ] += fatalities
+
+                    # cases_ch[sex][age] += cases
+                    # fatalities_ch[sex][age] += fatalities
+
+    # print(cases_ch)
+    # print(fatalities_ch)
+
+    # for key, value in cases_ch[]
 
     df_age["cases_pp"] = df_age["cases"] / df_age["count"]
     df_age["fatalities_pp"] = df_age["fatalities"] / df_age["count"]
