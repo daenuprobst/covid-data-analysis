@@ -3,7 +3,7 @@ import numpy as np
 
 
 def main():
-    df = pd.read_csv("bag_data_11_04.csv")
+    df = pd.read_csv("bag_data_latest.csv")
     df = df[(df["sex"] < 5) & (df["fallklasse"] == "sicherer Fall")]
     df["sex"] = df["sex"].replace(1, "Male").replace(2, "Female")
     df["fall_dt"] = pd.to_datetime(df["fall_dt"], format="%d.%m.%Y")
