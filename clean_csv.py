@@ -5,7 +5,8 @@ from collections import defaultdict
 
 def main():
     df = pd.read_csv("bag_data_latest.csv")
-    df = df[(df["sex"] < 5) & (df["fallklasse"] == "sicherer Fall")]
+    df = df[(df["sex"] < 5) & (df["fallklasse"].str.lower() == "sicherer fall")]
+
     df["sex"] = df["sex"].replace(1, "Male").replace(2, "Female")
     df["fall_dt"] = pd.to_datetime(df["fall_dt"], format="%d.%m.%Y")
     df.rename(columns={"altersjahr": "age"}, inplace=True)
