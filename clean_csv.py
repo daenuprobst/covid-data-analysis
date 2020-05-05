@@ -3,7 +3,7 @@ import numpy as np
 from collections import defaultdict
 
 
-def main():
+def age_distribution():
     df = pd.read_csv("bag_data_latest.csv")
     df = df[(df["sex"] < 5) & (df["fallklasse"].str.lower() == "sicherer fall")]
 
@@ -91,6 +91,32 @@ def main():
     df_age["fatalities_pp"] = df_age["fatalities"] / df_age["count"]
 
     df_age.to_csv("age_distribution_latest.csv", index=False)
+
+
+def tests():
+    df = pd.read_csv("bag_data_tests_latest.csv")
+    df["Date"] = pd.to_datetime(df["Datum"], format="%d.%m.%Y")
+
+    df = df.groupby("Date")
+
+    data = []
+    for name, group in df:
+        data.append(
+            {
+                "date": name,
+                "pos": int(group.iloc[0]["Positiv_Tests"].replace("'", "")),
+                "neg": int(group.iloc[1]["Negativ_Tests"].replace("'", "")),
+            }
+        )
+
+    df = pd.DataFrame(data)
+    df["pos_rate"] = df["pos"] / df["neg"]
+    df.to_csv("tests.csv", index=False)
+
+
+def main():
+    # age_distribution()
+    tests()
 
 
 if __name__ == "__main__":
