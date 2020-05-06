@@ -115,7 +115,7 @@ def tests():
 
 
 def main():
-    # age_distribution()
+    age_distribution()
     tests()
 
 
