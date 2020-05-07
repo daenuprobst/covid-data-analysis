@@ -110,7 +110,7 @@ def tests():
         )
 
     df = pd.DataFrame(data)
-    df["pos_rate"] = df["pos"] / df["neg"]
+    df["pos_rate"] = df["pos"] / (df["pos"] + df["neg"])
     df.to_csv("tests.csv", index=False)
 
 
