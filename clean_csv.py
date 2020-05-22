@@ -95,7 +95,7 @@ def age_distribution():
 
 def tests():
     df = pd.read_csv("bag_data_tests_latest.csv")
-    df["Date"] = pd.to_datetime(df["Datum"], format="%d.%m.%Y")
+    df["Date"] = pd.to_datetime(df["Datum"], format="%m/%d/%Y")
 
     df = df.groupby("Date")
 
@@ -104,8 +104,8 @@ def tests():
         data.append(
             {
                 "date": name,
-                "pos": int(group.iloc[0]["Positiv_Tests"].replace("'", "")),
-                "neg": int(group.iloc[1]["Negativ_Tests"].replace("'", "")),
+                "pos": int(group.iloc[0]["Positiv_Tests"]),
+                "neg": int(group.iloc[1]["Negativ_Tests"]),
             }
         )
 
