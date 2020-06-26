@@ -95,7 +95,7 @@ def age_distribution():
 
 def tests():
     df = pd.read_csv("bag_data_tests_latest.csv")
-    df["Date"] = pd.to_datetime(df["Datum"], format="%d.%m.%Y")
+    df["Date"] = pd.to_datetime(df["Datum"], format="%d/%m/%Y")
 
     df = df.groupby("Date")
 
